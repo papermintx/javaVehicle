@@ -5,10 +5,10 @@ import Vehicle.VehicleType;
 public class Bike extends Vehicle{
 
     private BikeType bikeType;
-    public Bike(String name, String color, int weight, VehicleType type, BikeType bikeType) {
-        super(name, color, weight, type);
-        this.bikeType = bikeType;
 
+    public Bike(String name, String color, int weight, VehicleType type, BikeType bikeType, int numberOfWheels) {
+        super(name, color, weight, type, numberOfWheels);
+        this.bikeType = bikeType;
     }
 
     @Override
@@ -20,10 +20,13 @@ public class Bike extends Vehicle{
     public void display() {
         System.out.println(
                 STR."""
-Name: \{getName()}
-Color: \{getColor()}
-Weight: \{getWeight()}
-Type: \{getType()}
+Nama: \{getName()}
+Warna: \{getColor()}
+Berat: \{getWeight()}
+Tipe: \{getType()}
+Jumlah Roda: \{getNumberOfWheels()}
+Kecepatan Maksimum: \{getMaxSpeed()}
+Jenis Sepeda: \{bikeType}
 """
         );
 
@@ -35,9 +38,13 @@ Type: \{getType()}
     }
 
     @Override
-    public void brake() {
-        System.out.println("Sepeda berhenti!");
+    public void accelerate() {
+        System.out.println("gowes gowes gowes ");
+    }
 
+    @Override
+    public void brake() {
+        System.out.println("Sepeda Berhenti");
     }
 
 

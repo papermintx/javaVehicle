@@ -1,6 +1,7 @@
 package Vehicle;
 
 public abstract class Vehicle {
+    public static int[] maxSpeeds = {500, 70};
 
     private VehicleType type;
     private String name;
@@ -11,6 +12,10 @@ public abstract class Vehicle {
 
     private int numberOfDoors;
 
+    private double maxSpeed;
+
+
+    // untuk mobil
     public Vehicle(String name, String color, int weight, VehicleType type, int numberOfWheels, int numberOfDoors) {
         this.type = type;
         this.name = name;
@@ -20,19 +25,14 @@ public abstract class Vehicle {
         this.numberOfDoors = numberOfDoors;
     }
 
-    public Vehicle(String name, String color, int weight, VehicleType type) {
-        this.type = type;
-        this.name = name;
-        this.color = color;
-        this.weight = weight;
-    }
-
+    // untuk sepeda
     public Vehicle(String name, String color, int weight, VehicleType type, int numberOfWheels) {
         this.type = type;
         this.name = name;
         this.color = color;
         this.weight = weight;
         this.numberOfWheels = numberOfWheels;
+        calculateMaxSpeed();
     }
 
 
@@ -53,14 +53,20 @@ public abstract class Vehicle {
         return weight;
     }
 
+    public int getNumberOfWheels() {
+        return numberOfWheels;
+    }
 
+    public int getNumberOfDoors() {
+        return numberOfDoors;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
 
     public void move() {
         System.out.printf("%s is moving\n", name);
-    }
-
-    public void stop() {
-        System.out.printf("%s stops\n", name);
     }
 
     public abstract void honk();
@@ -69,8 +75,13 @@ public abstract class Vehicle {
 
     public abstract void start() ;
 
-    public void accelerate() {
-        System.out.println("Vehicle is accelerating");
+    public abstract void accelerate() ;
+
+    public void calculateMaxSpeed() {
+        maxSpeed = switch (type) {
+            case CAR -> maxSpeeds[0] - ((double) weight / 100);
+            case BIKE -> maxSpeeds[1] - ((double) weight / 100);
+        };
     }
 
     public abstract void brake();

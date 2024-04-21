@@ -2,12 +2,13 @@ package Car;
 import Vehicle.Vehicle;
 import Vehicle.VehicleType;
 
+
 public class Car extends  Vehicle{
 
-    private CarType carType;
+    private final CarType carType;
 
-    public Car(String name, String color, int weight, VehicleType type, CarType carType) {
-        super(name, color, weight, type);
+    public Car(String name, String color, int weight, VehicleType type, CarType carType, int numberOfDoors, int numberOfWheels) {
+        super(name, color, weight, type, numberOfWheels, numberOfDoors);
         this.carType = carType;
     }
 
@@ -21,13 +22,17 @@ public class Car extends  Vehicle{
     public void display() {
         System.out.println(
                 STR."""
-Name: \{getName()}
-Color: \{getColor()}
-Weight: \{getWeight()}
-Type: \{getType()}
-Car Type: \{carType}
+Nama: \{getName()}
+Warna: \{getColor()}
+Berat: \{getWeight()}
+Jenis: \{getType()}
+Jumlah Pintu: \{getNumberOfDoors()}
+Jumlah Roda: \{getNumberOfWheels()}
+Kecepatan Maksimum: \{getMaxSpeed()}
+Jenis Mobil: \{carType}
 """
         );
+
     }
 
     @Override
@@ -37,9 +42,13 @@ Car Type: \{carType}
     }
 
     @Override
-    public void brake() {
-        System.out.println("Mobil berhenti!");
+    public void accelerate() {
+        System.out.println("brumm brumm brumm");
+    }
 
+    @Override
+    public void brake() {
+        System.out.println("Mobil Berhenti");
     }
 
 
