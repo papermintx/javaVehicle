@@ -1,7 +1,6 @@
 package Vehicle;
 
 public abstract class Vehicle {
-    public static int[] maxSpeeds = {500, 70};
 
     private VehicleType type;
     private String name;
@@ -14,6 +13,10 @@ public abstract class Vehicle {
 
     private double maxSpeed;
 
+    public void setMaxSpeeds(double maxSpeeds) {
+        this.maxSpeed = maxSpeeds;
+    }
+
 
     // untuk mobil
     public Vehicle(String name, String color, int weight, VehicleType type, int numberOfWheels, int numberOfDoors) {
@@ -23,6 +26,7 @@ public abstract class Vehicle {
         this.weight = weight;
         this.numberOfWheels = numberOfWheels;
         this.numberOfDoors = numberOfDoors;
+
     }
 
     // untuk sepeda
@@ -32,7 +36,6 @@ public abstract class Vehicle {
         this.color = color;
         this.weight = weight;
         this.numberOfWheels = numberOfWheels;
-        calculateMaxSpeed();
     }
 
 
@@ -66,7 +69,7 @@ public abstract class Vehicle {
     }
 
     public void move() {
-        System.out.printf("%s is moving\n", name);
+        System.out.println("Gowes gowes gowes");
     }
 
     public abstract void honk();
@@ -77,12 +80,7 @@ public abstract class Vehicle {
 
     public abstract void accelerate() ;
 
-    public void calculateMaxSpeed() {
-        maxSpeed = switch (type) {
-            case CAR -> maxSpeeds[0] - ((double) weight / 100);
-            case BIKE -> maxSpeeds[1] - ((double) weight / 100);
-        };
-    }
+    public abstract void calculateMaxSpeed();
 
     public abstract void brake();
 }

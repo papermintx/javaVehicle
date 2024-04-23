@@ -6,19 +6,26 @@ import Car.CarType;
 import Vehicle.VehicleType;
 import Bike.BikeType;
 
+
 public static ArrayList<Bike> bike = new ArrayList<>();
 public static ArrayList<Car> car = new ArrayList<>();
+
+public static void clearScreen() {
+    for (int i = 0; i < 50; ++i) System.out.println();
+}
+
 
 public static void menu(Scanner scanner) {
     boolean exit = false;
     while (!exit) {
         int choice;
-        System.out.println("1.Buat Mobil");
-        System.out.println("2.Buat Sepeda");
-        System.out.println("3.Lihat Kendaraan");
-        System.out.println("4.Mengendarai Mobil");
-        System.out.println("5.Mengendarai Sepeda");
-        System.out.println("6.Keluar");
+        System.out.println("Menu:");
+        System.out.println("1. Buat Mobil");
+        System.out.println("2. Buat Sepeda");
+        System.out.println("3. Lihat Kendaraan");
+        System.out.println("4. Mengendarai Mobil");
+        System.out.println("5. Mengendarai Sepeda");
+        System.out.println("6. Keluar");
         System.out.print("Pilih: ");
         choice = scanner.nextInt();
         scanner.nextLine();
@@ -41,9 +48,9 @@ public static void menu(Scanner scanner) {
             case 6:
                 System.out.println("Terima Kasih");
                 exit = true;
+                break;
             default:
                 System.out.println("Pilihan tidak valid");
-                menu(scanner);
                 break;
         }
     }
@@ -51,7 +58,15 @@ public static void menu(Scanner scanner) {
 
 public static void displayVehicle() {
     int i = 1;
+    if (bike.isEmpty() && car.isEmpty()) {
+        clearScreen();
+
+        System.out.println("Tidak Ada Kendaraan");
+        return;
+    }
     System.out.println();
+    clearScreen();
+
     for (Bike b : bike) {
         System.out.println(i + ". " + b.getName());
         i++;
@@ -61,10 +76,14 @@ public static void displayVehicle() {
         System.out.println(i + ". " + c.getName());
         i++;
     }
-    System.out.println();
+
 }
 
 public static void driveCar(Scanner scanner) {
+    if (car.isEmpty()) {
+        System.out.println("Tidak Ada Mobil");
+        return;
+    }
     boolean carStart = false;
     boolean carAccelerate = false;
     boolean carMove = false;
@@ -140,6 +159,8 @@ public static void driveCar(Scanner scanner) {
         int exitChoice = scanner.nextInt();
         if (exitChoice == 2) {
             carExit = true;
+            clearScreen();
+
         }
     }
 
@@ -148,6 +169,10 @@ public static void driveCar(Scanner scanner) {
 public static void driveBike(Scanner scanner) {
 
     boolean bikeExit = false;
+    if (bike.isEmpty()) {
+        System.out.println("Tidak Ada Sepeda");
+        return;
+    }
 
     int i = 1;
     for (Bike b : bike) {
@@ -189,6 +214,7 @@ public static void driveBike(Scanner scanner) {
         int exitChoice = scanner.nextInt();
         if (exitChoice == 2) {
             bikeExit = true;
+            clearScreen();
         }
     }
 
@@ -196,6 +222,15 @@ public static void driveBike(Scanner scanner) {
 
 
 public static void createBike(Scanner scanner) {
+    char confirm;
+    System.out.println("Apakah Kamu Yakin Ingin Membuat Sepeda? (y/n)");
+    confirm = scanner.next().charAt(0);
+    if (confirm == 'n' || confirm == 'N') {
+        menu(scanner);
+    }
+
+    scanner.nextLine();
+
     String name, color;
     int weight, numberOfWheels, bikeTypeChoice;
     BikeType bikeType;
@@ -220,11 +255,21 @@ public static void createBike(Scanner scanner) {
         default -> null;
     };
     bike.add(new Bike(name, color, weight, VehicleType.BIKE, bikeType, numberOfWheels));
+    clearScreen();
     System.out.println("Sepeda Berhasil Dibuat");
     menu(scanner);
 }
 
 public static void createCar(Scanner scanner) {
+    char confirm;
+    System.out.println("Apakah Kamu Yakin Ingin Membuat Mobil? (y/n)");
+    confirm = scanner.next().charAt(0);
+    if (confirm == 'n' || confirm == 'N') {
+        menu(scanner);
+    }
+
+    scanner.nextLine();
+
     String name, color;
     int weight, numberOfDoors, numberOfWheels, carTypeChoice;
     CarType carType;
@@ -238,6 +283,11 @@ public static void createCar(Scanner scanner) {
     numberOfDoors = scanner.nextInt();
     System.out.print("Jumlah Roda: ");
     numberOfWheels = scanner.nextInt();
+    while (numberOfWheels < 4) {
+        System.out.println("Mobil setidaknya memiliki 4 Roda");
+        System.out.print("Jumlah Roda: ");
+        numberOfWheels = scanner.nextInt();
+    }
     System.out.println("Mobil Berjenis: ");
     System.out.println("1.Sport");
     System.out.println("2.Sedan");
@@ -247,14 +297,15 @@ public static void createCar(Scanner scanner) {
     carTypeChoice = scanner.nextInt();
     carType = switch (carTypeChoice) {
         case 1 -> CarType.SPORT;
-        case 2 -> CarType.SEDAN;
         case 3 -> CarType.SUV;
         case 4 -> CarType.TRUCK;
-        default -> null;
+        default -> CarType.SEDAN;
     };
     car.add(new Car(name, color, weight, VehicleType.CAR, carType, numberOfDoors, numberOfWheels));
+    clearScreen();
     System.out.println("Mobil Berhasil Dibuat");
     menu(scanner);
+
 }
 
 

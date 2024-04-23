@@ -10,6 +10,7 @@ public class Car extends  Vehicle{
     public Car(String name, String color, int weight, VehicleType type, CarType carType, int numberOfDoors, int numberOfWheels) {
         super(name, color, weight, type, numberOfWheels, numberOfDoors);
         this.carType = carType;
+        calculateMaxSpeed();
     }
 
     @Override
@@ -21,19 +22,17 @@ public class Car extends  Vehicle{
     @Override
     public void display() {
         System.out.println(
-                STR."""
-Nama: \{getName()}
-Warna: \{getColor()}
-Berat: \{getWeight()}
-Jenis: \{getType()}
-Jumlah Pintu: \{getNumberOfDoors()}
-Jumlah Roda: \{getNumberOfWheels()}
-Kecepatan Maksimum: \{getMaxSpeed()}
-Jenis Mobil: \{carType}
-"""
+                "Nama: " + getName() + "\n" +
+                        "Warna: " + getColor() + "\n" +
+                        "Berat: " + getWeight() + "\n" +
+                        "Jenis: " + getType() + "\n" +
+                        "Jumlah Pintu: " + getNumberOfDoors() + "\n" +
+                        "Jumlah Roda: " + getNumberOfWheels() + "\n" +
+                        "Kecepatan Maksimum: " + getMaxSpeed() + "\n" +
+                        "Jenis Mobil: " + carType
         );
-
     }
+
 
     @Override
     public void start() {
@@ -50,6 +49,19 @@ Jenis Mobil: \{carType}
     public void brake() {
         System.out.println("Mobil Berhenti");
     }
+
+
+    @Override
+    public void calculateMaxSpeed() {
+        double calculated = getWeight() * 0.1;
+        switch (carType) {
+            case SEDAN -> setMaxSpeeds(180 - calculated);
+            case SPORT -> setMaxSpeeds(200 - calculated);
+            case SUV -> setMaxSpeeds(160 - calculated);
+            case TRUCK -> setMaxSpeeds(120 - calculated);
+        }
+    }
+
 
 
 }
